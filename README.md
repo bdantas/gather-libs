@@ -58,6 +58,6 @@ $ ./pack
 - `gather-libs` is simple and works great, but only for applications that require just its binary and shared libraries. That being said, a **lot** of applications fall into this category (e.g., dzen2, lsdvd, mksquashfs, mplayer, mpv, mupdf, nano, scrot, sshpass, xdotool, to name just a few).
 
 # Other notes
-- The `pack` and `unpack` scripts are based on this [great Linux Journal article](https://www.linuxjournal.com/node/1005818)
+- The basic idea behind the `pack` and `unpack` scripts were borrowed from this [fantastic Linux Journal article](https://www.linuxjournal.com/node/1005818)
 - I borrowed some very general concepts ideas from the AppImage project, of which I'm a huge fan. There are innumerable differences between my scrappy `.run` file and the venerable AppImage format, of course. Even at the highest level: An AppImage (type 2) is an ELF executable concatenated to a `squashfs` archive, whereas my `.run` is a humble shell script concatenated to a `tar` archive
 - The `pack` and `unpack` scripts can, of course, be put to uses other than bundling binaries and libraries. For other uses you probably won't need the `gather-libs` and `filter-libs` scripts. 
