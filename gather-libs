@@ -1,17 +1,11 @@
 #!/bin/sh
 
-# gather-libs 
-# version 7.0
-# Bruno "GNUser" Dantas GPLv2
-#
-# Purpose: Gather a binary and all the shared libraries it needs
-# Usage example: 
-#	In source OS: $ gather-libs nano
-#
-# User only needs to set this variable:
+# gather-libs v7.0
+# Bruno "GNUser" Dantas GPLv3
+
+# user variable:
 template_dir=$HOME/.pack_template
 
-### No need to change anything below this line
 main()
 {
 	sanity_checks "$@"
