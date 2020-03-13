@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# pack v7.0
+# Bruno "GNUser" Dantas GPLv3
+
+folderpath="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )" # ex: /home/bruno/packs/helloworld
+foldername="$(basename "$folderpath")" # ex: helloworld
+if echo "$foldername" | grep -q '_$'; then
+	projectname="$(echo "$foldername" | sed 's/_$//')" # ex: foldername helloworld_ => projectname helloworld
+else
+	projectname="$foldername" # ex: foldername helloworld => projectname helloworld
+fi
+
+cd "$folderpath"
+tar cvzf ../payload.tar.gz ./*
+cd ..
+cat "$folderpath/unpack" payload.tar.gz >"$projectname.run" && chmod a+x "$projectname.run"
+rm payload.tar.gz
+printf "\nDone! $(pwd)/$projectname.run created.\n"
+exit 0
