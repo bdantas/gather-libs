@@ -17,15 +17,14 @@ $ cp -r ./gather-libs/pack_template $HOME/.pack_template
 # Usage example:
 On source system:
 ```
-$ cd $HOME
 $ gather-libs nano
 ```
-The above step produces `$HOME/nano` directory. Copy that directory to the target system.
+The above step produces `nano` directory in your current directory. Copy the `nano` directory to the target system.
 
 On target system:
 ```
 $ cd nano
-$ ./filter-libs # this step sorts the libraries so that only those missing on target system will be used.
+$ ./filter-libs # this step sorts the libraries so that only those missing on target system are copied to ./libs for active use on the current target system. all libraries are stored in ./libs-all.tgz in case you need to run ./filter-libs on some other target system at a later date.
 $ ./pack
 ```
 
