@@ -16,7 +16,7 @@ $ sudo cp ./gather-libs /usr/local/bin/
 $ cp -r ./pack_template $HOME/.pack_template
 ```
 
-# Basic usage example:
+# Basic usage example
 **On source system:**
 ```
 $ gather-libs nano
@@ -36,7 +36,7 @@ At this point you no longer need the `nano` directory (everything you need is in
 
 Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in /tmp is deleted and only `nano.run` remains on your system.  
 
-# Advanced usage example:
+# Advanced usage
 If at any time you need to tweak `nano.run`, just do this:
 ```
 $ ./nano.run unpack
