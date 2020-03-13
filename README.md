@@ -54,6 +54,5 @@ $ ./pack
 ```
 
 # Notes
-- This approach works if target system uses same glibc or newer compared to source system (run `ldd --version` to check glibc version). If target system's glibc version is older than source system's, then you should use my `make-portable` script instead.
-- This approach works great but only for applications that work with just its binary and shared libraries. That being said, a lot of applications fall into this category (to name just a few: dzen2, lsdvd, mksquashfs, mplayer, mpv, mupdf, nano, scrot, sshpass, xdotool). 
-
+- `gather-libs` works if target system uses same glibc or newer compared to source system (run `ldd --version` to check glibc version). If target system's glibc version is older than source system's, then you should use my `make-portable` script instead.
+- `gather-libs` is simple and works great, but only for applications that require just its binary and shared libraries. That being said, a **lot** of applications fall into this category (e.g., dzen2, lsdvd, mksquashfs, mplayer, mpv, mupdf, nano, scrot, sshpass, xdotool, to name just a few).
