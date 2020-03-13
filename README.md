@@ -1,2 +1,3 @@
 # gather-libs
-Simple way to bundle a binary and all necessary libraries into a self-executing tarball
+Gather a binary and all its linked libraries into a self-executing tarball
+
