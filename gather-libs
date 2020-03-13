@@ -9,7 +9,7 @@
 #	In source OS: $ gather-libs nano
 #
 # User only needs to set this variable:
-template_dir=/opt/scripts/pack_template
+template_dir=$HOME/.pack_template
 
 ### No need to change anything below this line
 main()
