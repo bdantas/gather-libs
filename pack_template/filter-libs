@@ -1,0 +1,98 @@
+#!/bin/sh
+
+# filter-libs v7.0
+# Bruno "GNUser" Dantas GPLv3
+#
+# Purpose: Copy only libraries missing on target OS from foo/libs-all to foo/libs
+# Usage example: 
+#	In source OS: $ gather-libs foo
+#	In target OS: $ ./filter-libs
+
+main()
+{
+	check_dirs
+	copy_missing_libs
+	save_libs_all
+	closing_remarks
+}
+
+check_dirs() # ensure empty lib directory, ensure libs-all directory exists
+{
+	# first, change working directory to this script's directory
+	HERE="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
+	cd $HERE
+
+	# if filtering occurred before, delete the libs directory and create a new one
+	if [ -d $needed_libs ]; then
+		echo "Recreating $needed_libs directory..."
+		rm -rf $needed_libs
+		mkdir $needed_libs
+		sleep 1
+	else
+		echo "Creating $needed_libs directory..."
+		mkdir $needed_libs
+	fi
+
+	# if all_libs dir does not exist, create it from the tarball
+	if [ ! -d $all_libs ]; then
+		echo "Extracting ${all_libs}.tgz..."
+		tar -xvzf ${all_libs}.tgz >/dev/null
+		sleep 1
+	fi
+}
+
+show_progress()
+{
+	echo "Copying ${missing_lib} to ${needed_libs}..."
+}
+
+error_out()
+{
+	echo "Error: ${missing_lib} not found in ${all_libs}. Exiting..."
+	exit 1
+}
+
+copy_missing_libs()
+{
+	while true; do
+		cat /dev/null >$error
+		(./wrapper 2>&1 | grep 'error while loading shared lib' >$error &)
+		sleep 0.2
+		[ ! -s $error ] && break
+		missing_lib="$(awk -F': ' '{print $3}' $error)"
+		if [ -L $all_libs/$missing_lib ]; then # missing_lib is a link to a .so file
+			show_progress
+			cp -P $all_libs/$missing_lib $needed_libs || error_out
+			missing_lib=$(readlink $all_libs/$missing_lib)
+			show_progress
+			cp $all_libs/$missing_lib $needed_libs || error_out
+		else # missing_lib is an actual .so file, not a link
+			show_progress
+			cp $all_libs/$missing_lib $needed_libs || error_out
+		fi
+	done
+
+	# still here, so there were no errors copying missing libs:
+	echo "Success! The necessary libraries were copied from $all_libs to $needed_libs."
+}
+
+save_libs_all()
+{
+	if [ ! -e ${all_libs}.tgz ]; then
+		echo "Compressing ${all_libs}..."
+		tar -cvzf ${all_libs}.tgz ${all_libs} >/dev/null
+	fi
+	rm -rf ${all_libs}
+}
+
+closing_remarks()
+{
+	echo "Now run ./pack to create the .run file."
+}
+
+# internal variables:
+all_libs=libs-all
+needed_libs=libs
+error=/tmp/error
+
+main
