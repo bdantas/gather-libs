@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# unpack v7.0
+# Bruno "GNUser" Dantas GPLv3
+
+ARCHIVE_STARTLINE=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "$0") # gets line number below "__ARCHIVE_BELOW__"
+
+if [ "$1" = "unpack" ]; then
+	runfiledir="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )" # ex: /home/bruno/Desktop
+	if echo "$(basename "$0")" | grep -q '\.run$'; then 
+		unpackfolder="$(basename "$0" .run)" # ex: runfile helloworld.run => unpackfolder helloworld
+	else
+		unpackfolder="$(basename "$0")_" # ex: runfile helloworld => unpackfolder helloworld_
+	fi
+	DEST_DIR="$runfiledir/$unpackfolder"; [ -d "$DEST_DIR" ] && rm -r "$DEST_DIR"; mkdir "$DEST_DIR"
+	tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$DEST_DIR"
+	exit 0
+else
+	export TMPDIR=$(mktemp -d /tmp/selfextract.XXXXXX)
+
+	cleanup() { rm -rf $TMPDIR; }
+	trap cleanup TERM INT HUP # just in case we never reach the 'cleanup' call below 
+
+	tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$TMPDIR" 1>/dev/null
+	$TMPDIR/wrapper "$@" # <-- POST-UNPACK COMMAND
+	exit_status=$?
+	cleanup
+	exit $exit_status
+fi
+
+__ARCHIVE_BELOW__
