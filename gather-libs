@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# gather-libs 
+# version 7.0
+# Bruno "GNUser" Dantas GPLv2
+#
+# Purpose: Gather a binary and all the shared libraries it needs
+# Usage example: 
+#	In source OS: $ gather-libs nano
+#
+# User only needs to set this variable:
+template_dir=/opt/scripts/pack_template
+
+### No need to change anything below this line
+main()
+{
+	sanity_checks "$@"
+	cp -r $template_dir ./$1
+	populate_libs_all "$@"
+	copy_binary "$@"
+	closing_remarks "$@"
+}
+
+sanity_checks()
+{
+	[ $# -ne 1 ] && echo "Exactly one argument (binary name) is required. Try again." && exit 1
+	which "$1" >/dev/null || { echo "$1 not found in PATH. Try a different name."; exit 1; }
+	echo "$1" | grep -q '/' && { echo "Not a path--just the name of the binary, please."; exit 1; }
+}
+
+populate_libs_all()
+{
+	fullpath="$(which "$1")"
+	output_dir="./$1/libs-all"; [ ! -d $output_dir ] && mkdir -p $output_dir
+
+	for lib in $(ldd "$fullpath" | fgrep '=>' | awk '{print $3}'); do
+	    if [ -L "$lib" ]; then      # if lib is a link, copy link target then copy the link itself
+	        link="$lib"
+	        link_target="$(readlink -f "$link")"
+	        cp "$link_target" "$output_dir"
+	        cp -P "$link" "$output_dir" # -P means to copy links as a links, without following them to targets
+	    else                        # if lib isn't a link, just copy it
+	        cp "$lib" "$output_dir"
+	    fi
+	done
+}
+
+copy_binary()
+{
+	cp "$fullpath" ./$1/$1
+	sed -i "s/XXXXX/$1/" ./$1/wrapper # replace the placeholder in wrapper script
+}
+
+closing_remarks()
+{
+	echo "Success! See $(pwd)/$1"
+	echo "Copy the above directory to target system then, in target system, run:
+    ./filter-libs then 
+    ./pack"
+}
+
+main "$@"
+
