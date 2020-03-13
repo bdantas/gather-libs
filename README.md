@@ -45,7 +45,7 @@ $ cd nano
 $ ./pack
 ```
 
-If sometime in the future you want to use `nano.run` on a different target system, just copy `nano.run` to the target system then do this:
+If sometime in the future you want to use `nano.run` on a different target system, just copy `nano.run` to the new target system then do this:
 ```
 $ ./nano.run unpack
 $ cd nano
