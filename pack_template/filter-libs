@@ -2,11 +2,6 @@
 
 # filter-libs v7.0
 # Bruno "GNUser" Dantas GPLv3
-#
-# Purpose: Copy only libraries missing on target OS from foo/libs-all to foo/libs
-# Usage example: 
-#	In source OS: $ gather-libs foo
-#	In target OS: $ ./filter-libs
 
 main()
 {
