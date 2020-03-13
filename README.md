@@ -32,7 +32,7 @@ $ ./pack
 
 Now you have `nano.run` (feel free to rename it to just `nano` or whatever you want), which is an executable shell script attached to a tarball.  
 
-At this point you no longer need the `nano` directory (everything you need is in `nano.run`) so you can go ahead and delete it.
+At this point you no longer need the `nano` directory on the target system (everything you need is in `nano.run`), so you can go ahead and delete the directory.
 
 Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in /tmp is deleted and only `nano.run` remains on your system :)
 
