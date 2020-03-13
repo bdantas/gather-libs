@@ -32,8 +32,23 @@ Now you have `nano.run` (feel free to rename it to just `nano` or whatever you w
 
 At this point you no longer need the `nano` directory, because everything you need is in `nano.run`.
 
-Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in /tmp is deleted and only nano.run remains on your system.
+Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in /tmp is deleted and only `nano.run` remains on your system.  
+
+If at any time you need to tweak `nano.run`, just do this:
+```
+$ ./nano.run unpack
+-> make your tweaks
+$ ./pack
+```
+
+If sometime in the future you want to use `nano.run` on a different target system, just copy `nano.run` to the target system then do this:
+```
+$ ./nano.run unpack
+$ ./filter-libs
+$ ./pack
+```
 
 # Notes
-Coming soon
+- This approach works if target system uses same glibc or newer compared to source system (run `ldd --version` to check glibc version). If target system's glibc version is older than source system's, then you should use my `make-portable` script instead.
+- This approach works great but only for applications that work with just its binary and shared libraries. That being said, a lot of applications fall into this category (to name a few: dzen2, lsdvd, mksquashfs, mplayer, mpv, mupdf, scrot, sshpass, xdotool). 
 
