@@ -60,4 +60,4 @@ $ ./pack
 # Other notes
 - The basic idea behind the `pack` and `unpack` scripts comes from this [fantastic Linux Journal article](https://www.linuxjournal.com/node/1005818).
 - I borrowed some very general concepts from the AppImage project, of which I'm a huge fan. There are innumerable differences between my scrappy `.run` file and the venerable AppImage format, of course. Even at the highest level: An AppImage (type 2) is an ELF executable concatenated to a `squashfs` archive, whereas my `.run` is a humble shell script concatenated to a `tar` archive.
-- The `pack` and `unpack` scripts can, of course, be put to uses other than bundling binaries and libraries. For other uses you probably won't need my `gather-libs` and `filter-libs` scripts. 
+- The `pack` and `unpack` scripts can, of course, be put to uses other than bundling binaries and libraries. If you ever need to provide someone with a shell script along with supporting files of any kind (be they data, binaries, configuration files, AppImages, whatever), `pack` and `unpack` allow you to neatly bundle everything into a single file.
