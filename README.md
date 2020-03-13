@@ -1,5 +1,5 @@
 # gather-libs
-Gather a binary and all its shared library dependencies into a self-executing tarball
+Gather a binary and all the libraries it needs into a self-extracting, self-executing tarball
 
 # Dependencies
 - /bin/sh
