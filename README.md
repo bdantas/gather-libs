@@ -16,7 +16,7 @@ $ sudo cp ./gather-libs /usr/local/bin/
 $ cp -r ./pack_template $HOME/.pack_template
 ```
 
-# Basic usage example
+# Basic usage (using `nano` as an example)
 **On source system:**
 ```
 $ gather-libs nano
