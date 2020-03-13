@@ -2,8 +2,8 @@
 Gather a binary and all the libraries it needs into a self-extracting, self-executing tarball
 
 # Dependencies
-- /bin/sh
-- tar
+- **/bin/sh**
+- **tar**
 
 # Installation on source system
 ```
