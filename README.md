@@ -30,11 +30,11 @@ $ ./filter-libs # this step sorts the libraries so that only those missing on ta
 $ ./pack
 ```
 
-Now you have `nano.run` (feel free to rename it to just `nano` or whatever you want), which is an executable shell script attached to a tarball.  
+Now you have `nano.run` (feel free to rename it to just `nano` or whatever you want), which is an executable shell script and a tarball "magically" rolled into a single file.
 
 At this point you no longer need the `nano` directory on the target system (everything you need is in `nano.run`), so you can go ahead and delete the directory.
 
-Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in `/tmp` is deleted and only `nano.run` remains on your system :)
+Running `nano.run` causes the enclosed tarball to extract itself to a temporary directory in `/tmp`, then the binary runs with the bundled libraries. When the binary is done running, the temporary directory in `/tmp` is deleted so that only `nano.run` remains on your system :)
 
 # Advanced usage
 If at any time you need to tweak `nano.run`, just do this:
@@ -53,9 +53,11 @@ $ ./filter-libs
 $ ./pack
 ```
 
-# Notes
+# Important notes
 - `gather-libs` works if target system uses same glibc or newer compared to source system (run `ldd --version` to check glibc version). If target system's glibc version is older than source system's, then you should use my `make-portable` script instead.
 - `gather-libs` is simple and works great, but only for applications that require just its binary and shared libraries. That being said, a **lot** of applications fall into this category (e.g., dzen2, lsdvd, mksquashfs, mplayer, mpv, mupdf, nano, scrot, sshpass, xdotool, to name just a few).
+
+# Not-so-important notes
 - the `pack` and `unpack` scripts are based on this [great Linux Journal article](https://www.linuxjournal.com/node/1005818), which took me years to discover
 - I borrowed some very general concepts ideas from the AppImage project, of which I'm a huge fan. There are innumerable differences between my scrappy `.run` file and the venerable AppImage format, of course. Even at the highest level: An AppImage (type 2) is an ELF executable concatenated to a `squashfs` archive, whereas my `.run` is a shell script concatenated to a `tar` archive
 - the `pack` and `unpack` scripts can, of course, be put to uses other than bundling binaries and libraries. For other uses you probably won't need the `gather-libs` and `filter-libs` scripts. 
