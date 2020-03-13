@@ -34,7 +34,7 @@ Now you have `nano.run` (feel free to rename it to just `nano` or whatever you w
 
 At this point you no longer need the `nano` directory on the target system (everything you need is in `nano.run`), so you can go ahead and delete the directory.
 
-Running `nano.run` causes the enclosed tarball to extract itself to a temporary directory in `/tmp`, then the binary runs with the bundled libraries. When the binary is done running, the temporary directory in `/tmp` is deleted so that only `nano.run` remains on your system :)
+Running `nano.run` causes the invisible tarball to extract itself to a temporary directory in `/tmp`, then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in `/tmp` is deleted so that only `nano.run` remains on your system :)
 
 # Advanced usage
 If at any time you need to tweak `nano.run`, just do this:
