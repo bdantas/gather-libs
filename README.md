@@ -10,8 +10,10 @@ Gather a binary and all the libraries it needs into a self-extracting, self-exec
 $ cd /tmp
 $ wget https://github.com/bdantas/gather-libs/archive/master.zip
 $ unzip master.zip
-$ sudo cp ./gather-libs-master/gather-libs /usr/local/bin/
-$ cp -r ./gather-libs/pack_template $HOME/.pack_template
+$ cd gather-libs-master
+$ chmod -R a+x *
+$ sudo cp ./gather-libs /usr/local/bin/
+$ cp -r ./pack_template $HOME/.pack_template
 ```
 
 # Usage example:
@@ -30,13 +32,14 @@ $ ./pack
 
 Now you have `nano.run` (feel free to rename it to just `nano` or whatever you want), which is an executable shell script attached to a tarball.  
 
-At this point you no longer need the `nano` directory, because everything you need is in `nano.run`.
+At this point you no longer need the `nano` directory (everything you need is in `nano.run`) so you can go ahead and delete it.
 
 Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in /tmp is deleted and only `nano.run` remains on your system.  
 
 If at any time you need to tweak `nano.run`, just do this:
 ```
 $ ./nano.run unpack
+$ cd nano
 -> make your tweaks
 $ ./pack
 ```
@@ -44,6 +47,7 @@ $ ./pack
 If sometime in the future you want to use `nano.run` on a different target system, just copy `nano.run` to the target system then do this:
 ```
 $ ./nano.run unpack
+$ cd nano
 $ ./filter-libs
 $ ./pack
 ```
