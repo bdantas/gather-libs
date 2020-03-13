@@ -16,14 +16,14 @@ $ sudo cp ./gather-libs /usr/local/bin/
 $ cp -r ./pack_template $HOME/.pack_template
 ```
 
-# Usage example:
-On source system:
+# Basic usage example:
+**On source system:**
 ```
 $ gather-libs nano
 ```
 The above step produces `nano` directory in your current directory. Copy the `nano` directory to the target system.
 
-On target system:
+**On target system:**
 ```
 $ cd nano
 $ ./filter-libs # this step sorts the libraries so that only those missing on target system are copied to ./libs for active use. all libraries are saved in ./libs-all.tgz in case you need to run ./filter-libs on some other target system at a later date.
@@ -36,6 +36,7 @@ At this point you no longer need the `nano` directory (everything you need is in
 
 Running `nano.run` causes the tarball to extract itself to a temporary directory in `/tmp` and then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in /tmp is deleted and only `nano.run` remains on your system.  
 
+# Advanced usage example:
 If at any time you need to tweak `nano.run`, just do this:
 ```
 $ ./nano.run unpack
