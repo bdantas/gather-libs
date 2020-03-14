@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# unpack v7.0
+# unpack v7.1
 # Bruno "GNUser" Dantas GPLv3
 
 ARCHIVE_STARTLINE=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "$0") # gets line number below "__ARCHIVE_BELOW__"
