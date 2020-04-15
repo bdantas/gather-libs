@@ -1,10 +1,12 @@
 #!/bin/sh
 
-# wrapper v7.1
+# wrapper v7.2
 # Bruno "GNUser" Dantas GPLv3
 
-HERE=$(dirname $(readlink -f "${0}"))
-export LD_LIBRARY_PATH="$HERE/libs" 
-#export PATH=$HERE/bins:$PATH
+HERE="$(dirname "$(readlink -f "${0}")")"
+NAME="$(basename "$(readlink -f "${0}")")"
 
-exec $HERE/XXXXX "$@"
+export LD_LIBRARY_PATH="$HERE/libs" 
+#export PATH="$HERE/bins":$PATH
+
+exec "$HERE/XXXXX" "$@"
