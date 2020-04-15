@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# unpack v7.1
+# unpack v7.2
 # Bruno "GNUser" Dantas GPLv3
 
 ARCHIVE_STARTLINE=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "$0") # gets line number below "__ARCHIVE_BELOW__"
@@ -16,13 +16,14 @@ if [ "$1" = "unpack" ]; then
 	tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$DEST_DIR"
 	exit 0
 else
-	export TMPDIR=$(mktemp -d /tmp/selfextract.XXXXXX)
+	NAME="$(basename "$0")"
+	export TMPDIR="$(mktemp -d "/tmp/$NAME-selfextract.XXXXXX")"
 
-	cleanup() { rm -rf $TMPDIR; }
+	cleanup() { rm -rf "$TMPDIR"; }
 	trap cleanup TERM INT HUP # just in case we never reach the 'cleanup' call below 
 
 	tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$TMPDIR" 1>/dev/null
-	$TMPDIR/wrapper "$@" # <-- POST-UNPACK COMMAND
+	"$TMPDIR/wrapper" "$@" # <-- POST-UNPACK COMMAND
 	exit_status=$?
 	cleanup
 	exit $exit_status
