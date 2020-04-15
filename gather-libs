@@ -1,10 +1,10 @@
 #!/bin/sh
 
-# gather-libs v7.1
+# gather-libs v7.2
 # Bruno "GNUser" Dantas GPLv3
 
 # user variable:
-template_dir=$HOME/.pack_template
+template_dir=/opt/scripts/pack_template
 
 main()
 {
@@ -54,4 +54,3 @@ closing_remarks()
 }
 
 main "$@"
-
