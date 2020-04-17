@@ -12,6 +12,7 @@ main()
 	cp -r $template_dir ./$1
 	populate_libs_all "$@"
 	copy_binary "$@"
+	grab_manpage "$@"
 	closing_remarks "$@"
 }
 
@@ -43,6 +44,11 @@ copy_binary()
 {
 	cp "$fullpath" ./$1/$1
 	sed -i "s/XXXXX/$1/" ./$1/wrapper # replace the placeholder in wrapper script
+}
+
+grab_manpage()
+{
+	man "$1" >/dev/null 2>&1 && man "$1" 2>/dev/null | col -bx >./$1/${1}-manpage.txt 2>/dev/null
 }
 
 closing_remarks()
