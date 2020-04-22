@@ -7,11 +7,15 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 export LD_LIBRARY_PATH="$HERE/libs" 
 export PATH="$HERE:$HERE/bins:$PATH"
 
-# convert file/dir arguments to absolute paths before cd'ing
+# convert file and dir arguments to absolute paths before cd'ing
 NEWARGS=""
 for arg in "$@"; do
-	newarg="$(readlink -f "$arg" 2>/dev/null)"
-	[ $? -eq 0 ] && NEWARGS="$NEWARGS \"$newarg\"" || NEWARGS="$NEWARGS $arg" 
+	if ([ -f "$arg" ] || [ -d "$arg" ]); then
+		newarg="$(readlink -f "$arg")"
+		NEWARGS="$NEWARGS \"$newarg\"" 
+	else
+		NEWARGS="$NEWARGS $arg" 
+	fi
 done
 
 cd "$HERE"
