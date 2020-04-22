@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# pack v7.2
+# pack v8.0
 # Bruno "GNUser" Dantas GPLv3
 
 folderpath="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )" # ex: /home/bruno/packs/helloworld
