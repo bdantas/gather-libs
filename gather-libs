@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# gather-libs v7.2
+# gather-libs v8.0
 # Bruno "GNUser" Dantas GPLv3
 
 # user variable:
@@ -48,7 +48,7 @@ copy_binary()
 
 grab_manpage()
 {
-	man "$1" >/dev/null 2>&1 && man "$1" 2>/dev/null | col -bx >./$1/${1}-manpage.txt 2>/dev/null
+	man "$1" >/dev/null 2>&1 && man "$1" 2>/dev/null | col -bx >./$1/${1}.txt 2>/dev/null
 }
 
 closing_remarks()
