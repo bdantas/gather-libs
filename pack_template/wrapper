@@ -8,6 +8,7 @@ export LD_LIBRARY_PATH="$HERE/libs"
 export PATH="$HERE:$HERE/bins:$PATH"
 
 # convert file/dir arguments to absolute paths before cd'ing
+NEWARGS=""
 for arg in "$@"; do
 	newarg="$(readlink -f "$arg" 2>/dev/null)"
 	[ $? -eq 0 ] && NEWARGS="$NEWARGS \"$newarg\"" || NEWARGS="$NEWARGS $arg" 
