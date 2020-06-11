@@ -18,7 +18,7 @@ main()
 
 sanity_checks()
 {
-	[ $# -ne 1 ] && echo "Exactly one argument (binary name) is required. Try again." && exit 1
+	[ $# -ne 1 ] && { echo "Exactly one argument (binary name) is required. Try again."; exit 1; }
 	which "$1" >/dev/null || { echo "$1 not found in PATH. Try a different name."; exit 1; }
 	echo "$1" | grep -q '/' && { echo "Not a path--just the name of the binary, please."; exit 1; }
 }
@@ -28,7 +28,7 @@ populate_libs_all()
 	fullpath="$(which "$1")"
 	output_dir="./$1/libs-all"; [ ! -d $output_dir ] && mkdir -p $output_dir
 
-	for lib in $(ldd "$fullpath" | fgrep '=>' | awk '{print $3}'); do
+	for lib in $(ldd "$fullpath" | grep -F '=>' | awk '{print $3}'); do
 	    if [ -L "$lib" ]; then      # if lib is a link, copy link target then copy the link itself
 	        link="$lib"
 	        link_target="$(readlink -f "$link")"
