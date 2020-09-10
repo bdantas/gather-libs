@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# wrapper v8.0
+# wrapper v9.0
 # Bruno "GNUser" Dantas GPLv3
 
 HERE="$(dirname "$(readlink -f "${0}")")"
