@@ -4,9 +4,9 @@
 # Bruno "GNUser" Dantas GPLv3
 
 # user variable:
-unpack_method=default 
-# "default" deletes TMPDIR after running (pro: we leave no trace, con: we need to extract to TMPDIR with every run)
-# "turbo" does not delete TMPDIR (pro: only first run extracts to TMPDIR, so subsequent runs are faster; con: less OCD)
+unpack_method=standard # either "standard" or "turbo"
+# "standard" deletes TMPDIR after running (pro: we leave no trace; con: we need to recreate TMPDIR every run)
+# "turbo" doesn't delete TMPDIR (pro: only first run creates TMPDIR, so subsequent runs are faster; con: less OCD)
 
 ARCHIVE_STARTLINE=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "$0") # gets line number below "__ARCHIVE_BELOW__"
 
@@ -22,7 +22,7 @@ if [ "$1" = "unpack" ]; then
 	exit 0
 else
 	NAME="$(basename "$0")"
-	if [ "$unpack_method" = "default" ]; then
+	if [ "$unpack_method" = "standard" ]; then
 		export TMPDIR="$(mktemp -d "/tmp/$NAME-selfextract.XXXXXX")"
 		tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$TMPDIR" 1>/dev/null
 		cleanup() { rm -rf "$TMPDIR"; }
