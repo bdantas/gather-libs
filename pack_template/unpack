@@ -1,7 +1,12 @@
 #!/bin/sh
 
-# unpack v8.0
+# unpack v9.0
 # Bruno "GNUser" Dantas GPLv3
+
+# user variable:
+unpack_method=default 
+# "default" deletes TMPDIR after running (pro: we leave no trace, con: we need to extract to TMPDIR with every run)
+# "turbo" does not delete TMPDIR (pro: only first run extracts to TMPDIR, so subsequent runs are faster; con: less OCD)
 
 ARCHIVE_STARTLINE=$(awk '/^__ARCHIVE_BELOW__/ {print NR + 1; exit 0; }' "$0") # gets line number below "__ARCHIVE_BELOW__"
 
@@ -17,16 +22,23 @@ if [ "$1" = "unpack" ]; then
 	exit 0
 else
 	NAME="$(basename "$0")"
-	export TMPDIR="$(mktemp -d "/tmp/$NAME-selfextract.XXXXXX")"
-
-	cleanup() { rm -rf "$TMPDIR"; }
-	trap cleanup TERM INT HUP # just in case we never reach the 'cleanup' call below 
-
-	tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$TMPDIR" 1>/dev/null
-	"$TMPDIR/wrapper" "$@" # <-- POST-UNPACK COMMAND
-	exit_status=$?
-	cleanup
-	exit $exit_status
+	if [ "$unpack_method" = "default" ]; then
+		export TMPDIR="$(mktemp -d "/tmp/$NAME-selfextract.XXXXXX")"
+		tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$TMPDIR" 1>/dev/null
+		cleanup() { rm -rf "$TMPDIR"; }
+		trap cleanup TERM INT HUP # just in case we never reach the 'cleanup' call below 
+		"$TMPDIR/wrapper" "$@" # <-- POST-UNPACK COMMAND
+		exit_status=$?
+		cleanup
+		exit $exit_status
+	elif [ "$unpack_method" = "turbo" ]; then
+		export TMPDIR="/tmp/$NAME-selfextract"
+		if [ ! -d "$TMPDIR" ]; then
+			mkdir "$TMPDIR"
+			tail -n +$ARCHIVE_STARTLINE "$0" | tar xvzf - -C "$TMPDIR" 1>/dev/null
+		fi
+		exec "$TMPDIR/wrapper" "$@" # <-- POST-UNPACK COMMAND
+	fi
 fi
 
 __ARCHIVE_BELOW__
