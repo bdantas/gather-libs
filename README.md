@@ -34,7 +34,7 @@ Now you have `nano.run` (feel free to rename it to just `nano` or whatever you w
 
 At this point you no longer need the `nano` directory on the target system (everything you need is in `nano.run`), so you can go ahead and delete the directory.
 
-Running `nano.run` causes the enclosed tarball to be extracted to a temporary directory in `/tmp`, then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in `/tmp` is automatically deleted.
+Running `nano.run` causes the enclosed tarball to be extracted to a temporary directory in `/tmp`, then the enclosed binary runs with the bundled libraries. When the binary is done running, the temporary directory in `/tmp` is automatically deleted by default.
 
 # Advanced usage
 If at any time you need to tweak `nano.run`, just do this:
@@ -59,5 +59,5 @@ $ ./pack
 
 # Other notes
 - The basic idea behind the `pack` and `unpack` scripts comes from this [Linux Journal article](https://www.linuxjournal.com/node/1005818).
-- I borrowed some general concepts from the AppImage project, of which I'm a huge fan. There are innumerable differences between my scrappy `.run` file and the venerable AppImage format, of course. At the highest level: An AppImage (type 2) is an ELF executable concatenated to a `squashfs` archive, whereas my `.run` is a shell script concatenated to a `tar` archive. Whereas my `.run` file _extracts_ its payload at runtime, an AppImage _mounts_ its payload at runtime (for large payloads, an AppImage will therefore start-up faster). 
+- I borrowed some general concepts from the AppImage project, of which I'm a huge fan. There are innumerable differences between my scrappy `.run` file and the venerable AppImage format, of course. At the highest level: An AppImage (type 2) is an ELF executable concatenated to a `squashfs` archive, whereas my `.run` is a shell script concatenated to a `tar` archive. Whereas my `.run` file _extracts_ its payload at runtime, an AppImage _mounts_ its payload at runtime. 
 - The `pack` and `unpack` scripts can, of course, be put to uses other than bundling binaries and libraries. If you ever need to provide someone with a shell script along with supporting files of any kind (be they data, binaries, configuration files, AppImages, whatever), `pack` and `unpack` allow you to neatly bundle everything into a single file.
