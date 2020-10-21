@@ -57,7 +57,7 @@ copy_missing_libs()
 	while true; do
 		cat /dev/null >$error
 		(./wrapper 2>&1 | grep 'error while loading shared lib' >$error &)
-		sleep 0.2
+		sleep 0.1
 		[ ! -s $error ] && break
 		missing_lib="$(awk -F': ' '{print $3}' $error)"
 		if [ -L $all_libs/$missing_lib ]; then # missing_lib is a link to a .so file
