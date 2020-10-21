@@ -34,18 +34,18 @@ Now you have `nano.run` (feel free to rename it to just `nano` or whatever you w
 
 At this point you no longer need the `nano` directory on the target system (everything you need is in `nano.run`), so you can go ahead and delete the directory.
 
-Running `nano.run` causes the enclosed enclosed binary to run with the bundled libraries.
+Run `nano.run` on the target system to use the application.
 
 # Advanced usage
-If at any time you need to tweak `nano.run`, just do this:
+If at any time you need to tweak `nano.run`'s contents, just do this:
 ```
 $ ./nano.run unpack
 $ cd nano
--> make your tweaks
+-> make your changes
 $ ./pack
 ```
 
-If sometime in the future you want to use `nano.run` on a different target system, just copy `nano.run` to the new target system then do this:
+If sometime in the future you want to use `nano.run` on a different machine of same architecture, just copy `nano.run` to the new machine then do this:
 ```
 $ ./nano.run unpack
 $ cd nano
@@ -55,7 +55,7 @@ $ ./pack
 
 # Important notes
 - `foo.run` works if target system uses same glibc or newer compared to source system (run `ldd --version` to check glibc version). If target system's glibc version is older than source system's, then you should use [make-portable](https://github.com/bdantas/make-portable) instead of `gather-libs`.
-- `gather-libs` is simple and works great, but only for applications that require just its binary and shared libraries. That being said, a **lot** of applications fall into this category (e.g., curl, feh, lftp, mplayer, mpv, mupdf, nano, to name just a few).
+- `gather-libs` is simple and works great, but only for applications that require just its binary and shared libraries. That being said, a **lot** of applications fall into this category (e.g., curl, feh, lftp, mplayer, mpv, mupdf, nano, to name just a few).  
 
 # Other notes
 - The basic idea behind the `pack` and `unpack` scripts comes from this [Linux Journal article](https://www.linuxjournal.com/node/1005818).
