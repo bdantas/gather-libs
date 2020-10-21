@@ -26,7 +26,7 @@ The above step produces `nano` directory in your current directory. Copy the `na
 **On target system:**
 ```
 $ cd nano
-$ ./filter-libs # this step sorts the libraries so that only those missing on target system are copied to ./libs for active use. all libraries are saved in ./libs-all.tgz in case you need to run ./filter-libs on some other target system at a later date.
+$ ./filter-libs
 $ ./pack
 ```
 
