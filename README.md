@@ -18,6 +18,7 @@ $ cp -r ./pack_template $HOME/.pack_template
 
 # Basic usage (using `nano` as an example)
 **On source system:**
+Make sure `nano` is installed and working well. Then do this:
 ```
 $ gather-libs nano
 ```
