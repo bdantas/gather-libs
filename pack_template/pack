@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# pack v9.0
+# pack v9.1
 # Bruno "GNUser" Dantas GPLv3
 
 folderpath="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )" # ex: /home/bruno/packs/helloworld
@@ -17,4 +17,5 @@ cd ..
 cat "$folderpath/unpack" payload.tar.gz >"$projectname.run" && chmod a+x "$projectname.run"
 rm payload.tar.gz
 printf "\nDone! $(pwd)/$projectname.run created.\n"
+rm -rf /tmp/${projectname}-selfextract # ensures we don't accidentally use old payload at runtime
 exit 0
